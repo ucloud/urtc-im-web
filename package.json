@@ -1,0 +1,19 @@
+{
+    "name": "urtc-im",
+    "version": "0.0.9",
+    "description": "UCloud音视频IM SDK",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+      "urtc",
+      "rtc",
+      "UCloud",
+      "音视频",
+      "IM"
+    ],
+    "author": "zhangjizhe311@163.com",
+    "license": "ISC"
+  }
+  
