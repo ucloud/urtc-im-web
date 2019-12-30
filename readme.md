@@ -90,7 +90,7 @@ Err 为错误信息
 client.sendMsg(
     '测试',
     function(data){
-        console.log(client.getUser()),console.log(data)
+        console.log(data)
     },
     function(err){
         console.log(err)
