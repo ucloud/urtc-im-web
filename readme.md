@@ -197,7 +197,7 @@ const result = client.getUsers()
 }
 ``` -->
 
-<a name ="#client-adminusers"></a>
+<a name ="client-adminusers"></a>
 
 ### 8 getAdminUsers 方法
 获取房间 admin 用户，示例代码：
