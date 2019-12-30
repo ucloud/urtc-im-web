@@ -24,7 +24,7 @@ Client 类包含以下方法：
 * [构建函数 - 创建客户端](#client-constructor)
 * [joinRoom 方法 - 加入房间](#client-joinroom)
 * [close 方法 - 离开房间](#client-close)
-* [sendMsg 方法 - 发消息](#client-sendMsg)
+* [sendMsg 方法 - 发消息](#client-sendmsg)
 * [sendGlobal 方法 - 发广播](#client-sendglobal)
 * [authCall 方法 - 设置房间连麦权限](#client-authcall)
 * [getUser 方法 - 获取当前用户信息](#client-getuser)
@@ -128,21 +128,6 @@ function onSuccess(data) {}
 
 <a name ="client-authcall"></a>
 
-### 6 sendGlobal 方法
-推送广播，示例代码：
-```
-client.authCall(
-    flag,
-    onSuccess,
-    onError,
-)
-```
-#### 参数说明
-- flag,  string 类型 （open or close）, 开始 or 关闭房间连麦的权限，管理员角色设置
-- onSuccess,onError 参考 [sendMsg](#client-sendmsg)
-
-<a name ="client-authcall"></a>
-
 ### 6 authCall 方法
 推送广播，示例代码：
 ```
@@ -206,7 +191,7 @@ const result = client.getAdminUsers()
 ```
 #### 返回值说明
 
-- result: Array<user> 类型，类型说明如下
+- result: Array<user> 类型
 
 <a name ="client-defaultusers"></a>
 
