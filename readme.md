@@ -156,7 +156,7 @@ client.authCall(
 - flag,  string 类型 （open or close）, 开始 or 关闭房间连麦的权限，管理员角色设置
 - onSuccess,onError 参考 [sendMsg](#client-sendmsg)
 
-<a name ="#client-getuser"></a>
+<a name ="client-getuser"></a>
 
 ### 7 getUser 方法
 当前用户信息，示例代码：
@@ -179,7 +179,7 @@ User:
 }
 ```
 
-<a name ="#client-getusers"></a>
+<a name ="client-getusers"></a>
 
 <!-- ### 8 getUsers 方法
 获取房间所有用户信息，示例代码：
@@ -208,7 +208,7 @@ const result = client.getAdminUsers()
 
 - result: Array<user> 类型，类型说明如下
 
-<a name ="#client-defaultusers"></a>
+<a name ="client-defaultusers"></a>
 
 ### 9 getDefaultUsers 方法
 获取房间 default 用户，示例代码：
@@ -219,7 +219,7 @@ const result = client.getDefaultUsers()
 
 - result: Array<user> 类型 
 
-<a name ="#client-getwhiteboard"></a>
+<a name ="client-getwhiteboard"></a>
 
 ### 10 getWhiteboard 方法
 获取房间白板信息
