@@ -24,7 +24,7 @@ Client 类包含以下方法：
 * [构建函数 - 创建客户端](#client-constructor)
 * [joinRoom 方法 - 加入房间](#client-joinroom)
 * [close 方法 - 离开房间](#client-close)
-* [sendMsg 方法 - 发消息](#client-sendMsg)
+* [sendMsg 方法 - 发消息](#client-sendmsg)
 * [sendGlobal 方法 - 发广播](#client-sendglobal)
 * [authCall 方法 - 设置房间连麦权限](#client-authcall)
 * [getUser 方法 - 获取当前用户信息](#client-getuser)
@@ -39,6 +39,8 @@ Client 类包含以下方法：
 * [applyCall  方法 - 发起连麦请求](#client-applycall)
 * [replyCall  方法 - 应答连麦请求](#client-replycall)
 * [getRoomInfo  方法 - 房间信息](#client-getRoomInfo)
+* [getHistoryChat 方法 - 聊天记录](#client-getHistoryChat)
+* [banRoom 方法 - 禁言](#client-banRoom)
 <!-- * [getUsers 方法 - 获取房间全部用户 (admin 以及 default)](#client-getusers) -->
 
 <a name="client-constructor"></a>
@@ -74,7 +76,13 @@ client.joinRoom(RoomId, UserId, UserType, UserName, onSuccess, onFailure)
 - UserType: string 类型 (admin 或者 default)，必传，用户角色  
 - onSuccess: function 类型，选传，方法调用成功时执行的回调函数，函数说明如下
 ```
-function onSuccess(data) {}
+function onSuccess(data，roomInfo) {}
+data 为用户信息对象和房间信息
+{
+    roomInfo,
+    adminList,
+    defaultList,
+}
 ```
 - onFailure: 选传，函数类型，方法调用失败时执行的回调函数。
 ```
@@ -90,7 +98,7 @@ Err 为错误信息
 client.sendMsg(
     '测试',
     function(data){
-        console.log(client.getUser()),console.log(data)
+        console.log(data)
     },
     function(err){
         console.log(err)
@@ -128,21 +136,6 @@ function onSuccess(data) {}
 
 <a name ="client-authcall"></a>
 
-### 6 sendGlobal 方法
-推送广播，示例代码：
-```
-client.authCall(
-    flag,
-    onSuccess,
-    onError,
-)
-```
-#### 参数说明
-- flag,  string 类型 （open or close）, 开始 or 关闭房间连麦的权限，管理员角色设置
-- onSuccess,onError 参考 [sendMsg](#client-sendmsg)
-
-<a name ="client-authcall"></a>
-
 ### 6 authCall 方法
 推送广播，示例代码：
 ```
@@ -156,7 +149,7 @@ client.authCall(
 - flag,  string 类型 （open or close）, 开始 or 关闭房间连麦的权限，管理员角色设置
 - onSuccess,onError 参考 [sendMsg](#client-sendmsg)
 
-<a name ="#client-getuser"></a>
+<a name ="client-getuser"></a>
 
 ### 7 getUser 方法
 当前用户信息，示例代码：
@@ -179,7 +172,7 @@ User:
 }
 ```
 
-<a name ="#client-getusers"></a>
+<a name ="client-getusers"></a>
 
 <!-- ### 8 getUsers 方法
 获取房间所有用户信息，示例代码：
@@ -197,7 +190,7 @@ const result = client.getUsers()
 }
 ``` -->
 
-<a name ="#client-adminusers"></a>
+<a name ="client-adminusers"></a>
 
 ### 8 getAdminUsers 方法
 获取房间 admin 用户，示例代码：
@@ -206,9 +199,9 @@ const result = client.getAdminUsers()
 ```
 #### 返回值说明
 
-- result: Array<user> 类型，类型说明如下
+- result: Array<user> 类型
 
-<a name ="#client-defaultusers"></a>
+<a name ="client-defaultusers"></a>
 
 ### 9 getDefaultUsers 方法
 获取房间 default 用户，示例代码：
@@ -219,7 +212,7 @@ const result = client.getDefaultUsers()
 
 - result: Array<user> 类型 
 
-<a name ="#client-getwhiteboard"></a>
+<a name ="client-getwhiteboard"></a>
 
 ### 10 getWhiteboard 方法
 获取房间白板信息
@@ -243,7 +236,7 @@ const result = client.getWhiteboard();
 给事件绑定监听函数，示例代码：
 
 ```
-client.on(EventType, Listener)
+client.on(EventType, Listener(data))
 ```
 
 #### 参数说明
@@ -252,7 +245,7 @@ client.on(EventType, Listener)
 | "Ban" 禁言
 | "Id" 白板 ID 推送
 | "Broadcast" 广播
-| "Users" 用户加入
+| "Users" 用户加入  data object 新加入用户信息数组，object.AdminUsers 管理员列表 & object.defaultUsers 普通用户列表
 | "Bulletin" 公告
 | "CallAuth" 连麦权限
 | "CallApply" 发起上麦申请
@@ -350,6 +343,7 @@ client.applyCall(
 #### 参数说明
 - userId: string 类型， 接收方 id
 - flag:  string 类型，apply 申请 or cancel 取消
+- onSuccess(data) data: array, 当前房间在麦人数组信息
 
 <a name="client-replycall"></a>
 
@@ -390,6 +384,37 @@ const result = client.getRoomInfo()
     applayList: string, //房间连麦列表
 }
 ```
+<a name="client-getHistoryChat"></a>
+
+### 19 getHistoryChat 方法
+
+获取房间信息，示例代码：
+```
+client.getHistoryChat(
+    time,
+    onSuccess，
+    onError
+)
+```
+#### 参数说明
+- time: number 聊天开始时间戳（单位：s)
+
+<a name='client-banRoom'></a>
+
+### 20 banRoom 方法
+
+禁言功能，管理员可用：
+```
+client.banRoom(
+    BanType,
+    userId,
+    onSuccess，
+    onError
+)
+```
+#### 参数说明
+- banType type 必填  ban or unban 开启或解除禁言
+- userId: string 必填 用户 ID，填写是指定用户禁言，填写 null 则为房间禁言
 
 <a name='version'></a>
 ## 二、version 属性
